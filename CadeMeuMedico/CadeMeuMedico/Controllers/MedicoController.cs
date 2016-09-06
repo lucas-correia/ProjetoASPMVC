@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CadeMeuMedico.Models;
+using System.Data.SqlClient;
 
 namespace CadeMeuMedico.Controllers
 {
@@ -15,9 +16,17 @@ namespace CadeMeuMedico.Controllers
         // GET: /Medico/
         public ActionResult Index()
         {
-            var medicos = db.Medicos.Include("Cidades").Include("Especialidades").ToList();
+            try
+            {
+               var medicos = db.Medicos.Include("Cidades").Include("Especialidades").ToList();
+               return View(medicos);
+            }
+            catch (Exception e)
+            {
+                //generic exception
+            }
 
-            return View(medicos);
+            return View();
         }
 	}
 }
